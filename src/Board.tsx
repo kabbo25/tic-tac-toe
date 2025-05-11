@@ -1,12 +1,14 @@
 import './App.css';
 import Square from "./Component/Square";
+import type { BoardSquares } from './types';
 
 interface BoardProps {
-  square: (string | null)[];
+  square: BoardSquares;
   isXNext: boolean;
-  onPlay: ()=>void
+  onPlay: (squares: BoardSquares) => void;
+  onReset: () => void;
 }
-function Board({ square, isXNext, onPlay }: BoardProps) {
+function Board({ square, isXNext, onPlay,onReset }: BoardProps) {
 
   const calculateWinner = (squares: (string | null)[]) => {
     const lines = [
@@ -49,9 +51,6 @@ function Board({ square, isXNext, onPlay }: BoardProps) {
 
   }
 
-  const resetGame = () => {
-
-  }
 
   return (
     <div className="flex flex-col justify-center items-center ">
@@ -70,7 +69,7 @@ function Board({ square, isXNext, onPlay }: BoardProps) {
       {(winner || square.every(s => s)) && (
         <button
           type="reset"
-          onClick={resetGame}
+          onClick={onReset}
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Play Again
